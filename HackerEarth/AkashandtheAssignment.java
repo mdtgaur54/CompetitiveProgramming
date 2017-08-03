@@ -23,25 +23,26 @@ public class AkashandtheAssignment {
         r.init(System.in);
         int n = r.ni(), q= r.ni();
         String s = r.next();
+        char[] a = s.toCharArray();
         while (q-->0){
             int L = r.ni(), R = r.ni(), index = r.ni();
-            String sub = s.substring(L-1,R);
-            char[] a = sub.toCharArray();
-            Arrays.sort(a);
-            char ch = a[0];
-            ArrayList<Character> al = new ArrayList<>();
-            al.add(ch);
-            for (int i=1; i<a.length; i++){
-                if(a[i]!=ch){
-                    ch = a[i];
-                    al.add(ch);
+            if(R-L+1<index|| L-R>0 || L<0 || R>a.length) sb.append("Out of range");
+            else {
+                int[] b = new int[26];
+                for (int i = L - 1; i <= R - 1; i++)
+                    b[a[i] - 'a']++;
+                int sum = 0;
+                for (int i = 0; i < 26; i++) {
+                    if(b[i]>0) sum += b[i];
+                    if (sum >= index) {
+                        sb.append((char) (i + 'a')+"\n");
+                        break;
+                    }
                 }
             }
-            index--;
-            if(index<al.size())
-            w.println(al.get(index));
-            else w.println("Out of range");
+
         }
+        w.print(sb);
         w.flush();
     }
     public static void main(String[] args) throws IOException{
